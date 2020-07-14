@@ -1,10 +1,10 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { FlatList, StyleSheet, Text, View, TouchableHighlight} from 'react-native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { useNavigation } from '@react-navigation/native';
 
 // server send data list
-const DATA = [
+/*const DATA = [
   {
     id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
     title: '[GO] XXXXXXXXXX',
@@ -17,9 +17,14 @@ const DATA = [
     id: '58694a0f-3da1-471f-bd96-145571e29d72',
     title: 'Third Item',
   },
-];
+];*/
 
 
+
+
+
+
+// jsut the header (purple part)
 const Header = () => {
   return(
     <View style={styles.header}>
@@ -28,8 +33,10 @@ const Header = () => {
   );
 }
 
+// must be declared at firt
 const Stack = createStackNavigator();
 
+// main Home GUI
 export function Home() {
 
   return (
@@ -38,10 +45,9 @@ export function Home() {
         <Stack.Screen name="Details" component={DetailsScreen} />
       </Stack.Navigator>
   );
-
-  /**/
 }
 
+// function in ListScreen
 const ListItem = ({currentItem}) => {
 
   const navigation = useNavigation();
@@ -68,7 +74,18 @@ function DetailsScreen() {
   );
 }
 
+
 function ListScreen() {
+  const [isLoading, setLoading] = useState(true);
+  const [DATA, setData] = useState([]);
+
+  useEffect(() => {
+    fetch('https://reactnative.dev/movies.json')
+      .then((response) => response.json())
+      .then((json) => setData(json.movies))
+      .catch((error) => console.error(error))
+      .finally(() => setLoading(false));
+  }, []);
   return (
     <View style={styles.container}>
       <Header />
