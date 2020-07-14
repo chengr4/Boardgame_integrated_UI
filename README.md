@@ -2,5 +2,5 @@
 
 ## Structure
 
-main: App.js  
+main: App.js    
 GUI: GUI/
