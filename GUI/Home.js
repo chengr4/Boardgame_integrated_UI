@@ -19,11 +19,6 @@ import { useNavigation } from '@react-navigation/native';
   },
 ];*/
 
-
-
-
-
-
 // jsut the header (purple part)
 const Header = () => {
   return(
@@ -76,7 +71,6 @@ function DetailsScreen() {
 
 
 function ListScreen() {
-  const [isLoading, setLoading] = useState(true);
   const [DATA, setData] = useState([]);
 
   useEffect(() => {
@@ -84,7 +78,6 @@ function ListScreen() {
       .then((response) => response.json())
       .then((json) => setData(json.movies))
       .catch((error) => console.error(error))
-      .finally(() => setLoading(false));
   }, []);
   return (
     <View style={styles.container}>
