@@ -79,6 +79,7 @@ function ListScreen() {
       .then((json) => setData(json.movies))
       .catch((error) => console.error(error))
   }, []);
+  
   return (
     <View style={styles.container}>
       <Header />
