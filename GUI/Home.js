@@ -1,10 +1,11 @@
-import React, { useEffect, useState } from 'react';
-import { FlatList, StyleSheet, Text, View, TouchableHighlight} from 'react-native';
+import React, { useEffect, useState, useCallback} from 'react';
+import { FlatList, StyleSheet, Text, View, TouchableHighlight, Linking} from 'react-native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { useNavigation } from '@react-navigation/native';
 
+
 // server send data list
-/*const DATA = [
+const DATA = [
   {
     id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
     title: '[GO] XXXXXXXXXX',
@@ -17,7 +18,8 @@ import { useNavigation } from '@react-navigation/native';
     id: '58694a0f-3da1-471f-bd96-145571e29d72',
     title: 'Third Item',
   },
-];*/
+];
+
 
 // jsut the header (purple part)
 const Header = () => {
@@ -44,41 +46,77 @@ export function Home() {
 
 // function in ListScreen
 const ListItem = ({currentItem}) => {
-
+  const supportedURL = "https://www.haifong.org/?p=37758&print=1";
   const navigation = useNavigation();
 
-  const onPress = () => {
+  /*const onPress = () => {
     navigation.navigate('Details')
-  };
+  };*/
 
+  const onPress = useCallback(async () => {
+    // Checking if the link is supported for links with custom URL scheme.
+    const supported = await Linking.canOpenURL(supportedURL);
+
+    if (supported) {
+      // Opening the link with some app, if the URL scheme is "http" the web link should be opened
+      // by some browser in the mobile
+      await Linking.openURL(supportedURL);
+    } else {
+      Alert.alert(`Don't know how to open this URL`);
+    }
+  });
+
+  // content output
   return (
     <TouchableHighlight style={styles.listItem} onPress={onPress}>
       <View style={styles.listItemView}>
-        <Text style={styles.item}>{currentItem.title}</Text>
+  <Text style={styles.item}>{currentItem.title} {currentItem.source}</Text>
       </View>
     </TouchableHighlight>
   );
-  
 }
 
+/**
+ * 
+ */
+const OpenURLButton = ({ url, children }) => {
+  const handlePress = useCallback(async () => {
+    // Checking if the link is supported for links with custom URL scheme.
+    const supported = await Linking.canOpenURL(url);
+
+    if (supported) {
+      // Opening the link with some app, if the URL scheme is "http" the web link should be opened
+      // by some browser in the mobile
+      await Linking.openURL(url);
+    } else {
+      Alert.alert(`Don't know how to open this URL: ${url}`);
+    }
+  }, [url]);
+
+  return <Button title={children} onPress={handlePress} />;
+};
+
+/** 
+ * Detail screen
+*/
 function DetailsScreen() {
   return (
-    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-      <Text>Details Screen</Text>
+    <View style={styles.container}>
+      <OpenURLButton url={supportedURL}>Open Supported URL</OpenURLButton>
     </View>
   );
-}
+};
 
 
 function ListScreen() {
-  const [DATA, setData] = useState([]);
+  //const [DATA, setData] = useState([]);
 
-  useEffect(() => {
-    fetch('https://reactnative.dev/movies.json')
+  /*useEffect(() => {
+    fetch('http://127.0.0.1:5000/e/e')
       .then((response) => response.json())
-      .then((json) => setData(json.movies))
+      .then((json) => setData(json.GoProInfo))
       .catch((error) => console.error(error))
-  }, []);
+  }, []);*/
   
   return (
     <View style={styles.container}>
@@ -89,7 +127,7 @@ function ListScreen() {
       />
     </View>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {
@@ -120,4 +158,4 @@ const styles = StyleSheet.create({
     fontSize: 18,
   },
   
-})
+});
