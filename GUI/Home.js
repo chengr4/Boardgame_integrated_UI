@@ -5,20 +5,6 @@ import { useNavigation } from '@react-navigation/native';
 
 
 // server send data list
-const DATA = [
-  {
-    id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
-    title: '[GO] XXXXXXXXXX',
-  },
-  {
-    id: '3ac68afc-c605-48d3-a4f8-fbd91aa97f63',
-    title: '[Chinese chess] XXXXXXXX',
-  },  
-  {
-    id: '58694a0f-3da1-471f-bd96-145571e29d72',
-    title: 'Third Item',
-  },
-];
 
 
 // jsut the header (purple part)
@@ -46,10 +32,11 @@ export function Home() {
 
 // function in ListScreen
 const ListItem = ({currentItem}) => {
-  const supportedURL = "https://www.haifong.org/?p=37758&print=1";
-  const navigation = useNavigation();
+  const supportedURL = currentItem.href;
 
-  /*const onPress = () => {
+  // temporarily not be used, but maybe be used in the future
+  /*const navigation = useNavigation();
+  const onPress = () => {
     navigation.navigate('Details')
   };*/
 
@@ -76,47 +63,28 @@ const ListItem = ({currentItem}) => {
   );
 }
 
-/**
- * 
- */
-const OpenURLButton = ({ url, children }) => {
-  const handlePress = useCallback(async () => {
-    // Checking if the link is supported for links with custom URL scheme.
-    const supported = await Linking.canOpenURL(url);
-
-    if (supported) {
-      // Opening the link with some app, if the URL scheme is "http" the web link should be opened
-      // by some browser in the mobile
-      await Linking.openURL(url);
-    } else {
-      Alert.alert(`Don't know how to open this URL: ${url}`);
-    }
-  }, [url]);
-
-  return <Button title={children} onPress={handlePress} />;
-};
-
 /** 
  * Detail screen
+ * Maybe be used in the future
 */
 function DetailsScreen() {
   return (
     <View style={styles.container}>
-      <OpenURLButton url={supportedURL}>Open Supported URL</OpenURLButton>
+      123
     </View>
   );
 };
 
 
 function ListScreen() {
-  //const [DATA, setData] = useState([]);
+  const [DATA, setData] = useState([]);
 
-  /*useEffect(() => {
+  useEffect(() => {
     fetch('http://127.0.0.1:5000/e/e')
       .then((response) => response.json())
       .then((json) => setData(json.GoProInfo))
       .catch((error) => console.error(error))
-  }, []);*/
+  }, []);
   
   return (
     <View style={styles.container}>
