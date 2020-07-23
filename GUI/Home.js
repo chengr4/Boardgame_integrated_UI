@@ -82,7 +82,15 @@ function ListScreen() {
   useEffect(() => {
     fetch('http://127.0.0.1:5000/e/e')
       .then((response) => response.json())
-      .then((json) => setData(json.GoProInfo))
+      .then((json) =>{
+        var data = [];
+        // concatenate all json crawlers caught
+        data = data.concat(json.GoProInfo);
+        data = data.concat(json.ChineseChessNews);
+        data = data.concat(json.ChessNews);
+        return data;
+      })
+      .then(data=>setData(data))
       .catch((error) => console.error(error))
   }, []);
   
@@ -91,6 +99,7 @@ function ListScreen() {
       <Header />
       <FlatList
         data={DATA}
+        keyExtractor={({ id }, index) => id}
         renderItem={({item}) => <ListItem currentItem={item}/>}
       />
     </View>
