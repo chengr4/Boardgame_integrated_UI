@@ -4,8 +4,21 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { useNavigation } from '@react-navigation/native';
 
 
-// server send data list
-
+// data list that server sent (template)
+const DATA = [
+  {
+    id: "bd7acbea-c1b1-46c2-aed5-3ad53abb28ba",
+    title: "First Item",
+  },
+  {
+    id: "3ac68afc-c605-48d3-a4f8-fbd91aa97f63",
+    title: "Second Item",
+  },
+  {
+    id: "58694a0f-3da1-471f-bd96-145571e29d72",
+    title: "Third Item",
+  },
+];
 
 // jsut the header (purple part)
 const Header = () => {
@@ -77,9 +90,9 @@ function DetailsScreen() {
 
 
 function ListScreen() {
-  const [DATA, setData] = useState([]);
+  //const [DATA, setData] = useState([]);
 
-  useEffect(() => {
+  /*useEffect(() => {
     fetch('http://127.0.0.1:5000/e/e')
       .then((response) => response.json())
       .then((json) =>{
@@ -92,7 +105,7 @@ function ListScreen() {
       })
       .then(data=>setData(data))
       .catch((error) => console.error(error))
-  }, []);
+  }, []);*/
   
   return (
     <View style={styles.container}>

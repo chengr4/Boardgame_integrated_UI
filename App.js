@@ -6,7 +6,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
 // import each GUI (Home, Youtube, Forum)
 import {Home} from './GUI/Home';
-import {YTChannel} from './GUI/YTChannel';
+import {YTChannel} from './GUI/YTChannel/YTChannel';
 import {Forum} from './GUI/Forum';
 
 
