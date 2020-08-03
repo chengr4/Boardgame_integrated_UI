@@ -1,18 +1,30 @@
 import * as React from 'react';
-import { Text, View, StyleSheet, TouchableOpacity, FlatList } from 'react-native';
+import { Text, View, StyleSheet, Button, FlatList, Alert } from 'react-native';
 import {Card} from './Card';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import data from './test_data.json';
 
-// watch https://www.youtube.com/watch?v=LdKtugH-sb8 
 export function YTChannel() {
+  Icon.loadFont();
   return (
     <View style={styles.container}>
       <View style={styles.header}>
         <Text style={styles.headerText}>Youtube</Text>
-          <TouchableOpacity style={styles.icon}>
-            <Icon name="search" size={32}/>
-          </TouchableOpacity>
+        <Button
+        title="Go"
+        color="#f194ff"
+        onPress={() => Alert.alert('Simple Button pressed')}
+        />
+        <Button
+        title="Chinese Chess"
+        color="#f194ff"
+        onPress={() => Alert.alert('Simple Button pressed')}
+        />
+        <Button
+        title="Chess"
+        color="#f194ff"
+        onPress={() => Alert.alert('Simple Button pressed')}
+        />
       </View>
       <View style={styles.body}>
         <FlatList
