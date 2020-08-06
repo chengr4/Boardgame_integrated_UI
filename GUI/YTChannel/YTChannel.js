@@ -1,28 +1,30 @@
 import React, { useState } from 'react';
-import { Text, View, StyleSheet, TouchableOpacity, FlatList, Alert } from 'react-native';
+import { Text, View, StyleSheet, TouchableOpacity, ActivityIndicator, FlatList, Alert } from 'react-native';
 import {Card} from './Card';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import data from './test_data.json';
-import { set } from 'react-native-reanimated';
+
 
 /**
  * Youtube channel
  */
 export function YTChannel() {
   const [DATA, setData] = useState([]);
-  const [value, setValue] = useState('%E5%9C%8D%E6%A3%8B');
-  const key =  `GET https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=10&q=${value}&type=video`
-  +'key=AIzaSyBDUTYk0pd5-0Iq0Lma52qmOfVVgtraO38';
+  const [Loading, setLoading] = useState(false);
+  const [value, setValue] = useState('');
 
   // must have don't know why
   Icon.loadFont();
 
   const onPress = () => {
-    fetch(key)
+    setLoading(true);
+    /*fetch(`https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=10&q=${value}&type=video&`
+    +'key=AIzaSyBDUTYk0pd5-0Iq0Lma52qmOfVVgtraO38')
       .then((response) => response.json())
       .then(json=>setData(json))
-      .catch((error) => console.error(error));
+      .catch((error) => console.error(error));*/
+    setLoading(false);
   }
+  
   return (
     <View style={styles.container}>
       <View style={styles.header}>
@@ -30,16 +32,18 @@ export function YTChannel() {
         <TouchableOpacity
           style={styles.headerButton}
           onPress={()=>{
-            setValue('%E5%9C%8D%E6%A3%8B');
+            text = '圍棋';
+            setValue(text);
             onPress();
-          } }
+          }}
         >
           <Text>Go</Text>
         </TouchableOpacity>
         <TouchableOpacity
           style={styles.headerButton}
-          onPress={()=> {
-            setValue('象棋');
+          onPress={()=>{
+            text = '象棋';
+            setValue(preValue => preValue.replace(preValue, text));
             onPress();
           }}
         >
@@ -47,8 +51,9 @@ export function YTChannel() {
         </TouchableOpacity>
         <TouchableOpacity
           style={styles.headerButton}
-          onPress={()=> {
-            setValue('西洋棋');
+          onPress={()=>{
+            text = '西洋棋';
+            setValue(preValue => preValue.replace(preValue, text));
             onPress();
           }}
         >
@@ -56,6 +61,8 @@ export function YTChannel() {
         </TouchableOpacity>
       </View>
       <View style={styles.body}>
+        {Loading ? <ActivityIndicator size="large" color="red" /> : null}
+        <Text>{value}</Text>
         <FlatList
            data = {DATA.items}
            keyExtractor={item => item.id.videoId}
