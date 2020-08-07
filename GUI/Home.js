@@ -3,9 +3,8 @@ import { FlatList, StyleSheet, Text, View, TouchableHighlight, Linking} from 're
 import { createStackNavigator } from '@react-navigation/stack';
 import { useNavigation } from '@react-navigation/native';
 
-
 // data list that server sent (template)
-const DATA = [
+/*const DATA = [
   {
     id: "bd7acbea-c1b1-46c2-aed5-3ad53abb28ba",
     title: "First Item",
@@ -22,7 +21,12 @@ const DATA = [
     id: "58694da0f-3da1-471f-bd96-145571e29d72",
     title: "Tx Item",
   },
-];
+];*/
+
+
+// must be declared at firt
+const Stack = createStackNavigator();
+
 
 // jsut the header (purple part)
 const Header = () => {
@@ -32,9 +36,6 @@ const Header = () => {
     </View>
   );
 }
-
-// must be declared at firt
-const Stack = createStackNavigator();
 
 // main Home GUI
 export function Home() {
@@ -94,9 +95,11 @@ function DetailsScreen() {
 
 
 function ListScreen() {
-  //const [DATA, setData] = useState([]);
+  const [DATA, setData] = useState([]);
+  const [refreshing, setRefreshing] = useState(false);
 
-  /*useEffect(() => {
+  const getData = () => {
+    setRefreshing(true);
     fetch('http://127.0.0.1:5000/e/e')
       .then((response) => response.json())
       .then((json) =>{
@@ -109,14 +112,19 @@ function ListScreen() {
       })
       .then(data=>setData(data))
       .catch((error) => console.error(error))
-  }, []);*/
+      .finally(()=>setRefreshing(false));
+  }
+
+  useEffect(getData, []);
   
   return (
     <View style={styles.container}>
       <Header />
       <FlatList
         data={DATA}
-        keyExtractor={({ id }, index) => id}
+        keyExtractor={({ id }) => id}
+        refreshing={refreshing}
+        onRefresh={getData}
         renderItem={({item}) => <ListItem currentItem={item}/>}
       />
     </View>
