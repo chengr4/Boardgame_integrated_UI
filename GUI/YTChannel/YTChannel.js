@@ -10,18 +10,17 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 export function YTChannel() {
   const [DATA, setData] = useState([]);
   const [Loading, setLoading] = useState(false);
-  const [value, setValue] = useState('');
 
-  // must have don't know why
+  // must have, don't know why
   Icon.loadFont();
 
-  const onPress = () => {
+  const onPress = (text) => {
     setLoading(true);
-    /*fetch(`https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=10&q=${value}&type=video&`
+    fetch(`https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=10&q=${text}&type=video&`
     +'key=AIzaSyBDUTYk0pd5-0Iq0Lma52qmOfVVgtraO38')
       .then((response) => response.json())
       .then(json=>setData(json))
-      .catch((error) => console.error(error));*/
+      .catch((error) => console.error(error));
     setLoading(false);
   }
   
@@ -33,8 +32,7 @@ export function YTChannel() {
           style={styles.headerButton}
           onPress={()=>{
             text = '圍棋';
-            setValue(text);
-            onPress();
+            onPress(text);
           }}
         >
           <Text>Go</Text>
@@ -43,8 +41,7 @@ export function YTChannel() {
           style={styles.headerButton}
           onPress={()=>{
             text = '象棋';
-            setValue(preValue => preValue.replace(preValue, text));
-            onPress();
+            onPress(text);
           }}
         >
           <Text>Chinese chess</Text>
@@ -53,8 +50,7 @@ export function YTChannel() {
           style={styles.headerButton}
           onPress={()=>{
             text = '西洋棋';
-            setValue(preValue => preValue.replace(preValue, text));
-            onPress();
+            onPress(text);
           }}
         >
           <Text>Chess</Text>
@@ -62,7 +58,6 @@ export function YTChannel() {
       </View>
       <View style={styles.body}>
         {Loading ? <ActivityIndicator size="large" color="red" /> : null}
-        <Text>{value}</Text>
         <FlatList
            data = {DATA.items}
            keyExtractor={item => item.id.videoId}
