@@ -75,29 +75,55 @@ const ListItem = ({currentItem}) => {
   return (
     <TouchableHighlight style={styles.listItem} onPress={onPress}>
       <View style={styles.listItemView}>
-  <Text style={styles.item}>{currentItem.title} {currentItem.source}</Text>
+        <Text style={styles.item}>{currentItem.title} {currentItem.source}</Text>
       </View>
     </TouchableHighlight>
   );
 }
 
-/** 
- * Detail screen
- * Maybe be used in the future
-*/
-function DetailsScreen() {
+/**
+ * 
+ * @param {*} param0 
+ * Article items
+ */
+const ArticleItem = ({currentItem}) => {
+
+  // temporarily not be used, but maybe be used in the future
+  const navigation = useNavigation();
+  const onPress = () => {
+    navigation.navigate('Details', {currentItem})
+  };
+  
+
+  // content output
+  return (
+    <TouchableHighlight style={styles.listItem} onPress={onPress}>
+      <View style={styles.listItemView}>
+        <Text style={styles.item}>{currentItem.article_title}</Text>
+      </View>
+    </TouchableHighlight>
+  );
+}
+
+/**
+ * Detail Screen
+ */
+const DetailsScreen = ({route}) => {
+  const {currentItem} = route.params;
   return (
     <View style={styles.container}>
-      123
+    <Text>{currentItem.content}</Text>
     </View>
   );
-};
+}
+
+
 
 
 function ListScreen() {
   const [DATA, setData] = useState([]);
+  const [Content, setContent] = useState([]);
   const [refreshing, setRefreshing] = useState(false);
-
   const getData = () => {
     setRefreshing(true);
     fetch('http://127.0.0.1:5000/e/e')
@@ -108,24 +134,41 @@ function ListScreen() {
         data = data.concat(json.GoProInfo);
         data = data.concat(json.ChineseChessNews);
         data = data.concat(json.ChessNews);
+        // sort data randomly
+        data = data.sort(()=>Math.random() - 0.5);
         return data;
       })
       .then(data=>setData(data))
+      .catch((error) => console.error(error));
+      
+      fetch('http://127.0.0.1:5000/post/new-app')
+      .then((response) => response.json())
+      .then((json) =>{
+         data = json.reverse();
+        setContent(data);
+      })
       .catch((error) => console.error(error))
       .finally(()=>setRefreshing(false));
   }
 
+  // must use, dont know why
   useEffect(getData, []);
   
   return (
     <View style={styles.container}>
       <Header />
       <FlatList
-        data={DATA}
+        data={DATA.concat(Content)}
         keyExtractor={({ id }) => id}
         refreshing={refreshing}
         onRefresh={getData}
-        renderItem={({item}) => <ListItem currentItem={item}/>}
+        renderItem={({item, index}) => {
+            // web crawler collect 12 items, so from 13 is the article
+            if(index>=11) {
+              return <ArticleItem currentItem={item}/>
+            }
+            return <ListItem currentItem={item}/>
+        }}
       />
     </View>
   );

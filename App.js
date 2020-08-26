@@ -7,7 +7,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 // import each GUI (Home, Games, Youtube, Forum)
 import {Home} from './GUI/Home';
 import {YTChannel} from './GUI/YTChannel/YTChannel';
-import {Forum} from './GUI/Forum';
+import {Profile} from './GUI/Profile';
 import {Games} from './GUI/Games';
 
 
@@ -20,7 +20,7 @@ export default function App() {
         <Tab.Screen name="Home" component={Home} />
         <Tab.Screen name="Games" component={Games} />
         <Tab.Screen name="Youtube" component={YTChannel} />
-        <Tab.Screen name="Forum" component={Forum} />
+        <Tab.Screen name="Profile" component={Profile} />
       </Tab.Navigator>
     </NavigationContainer>
   );
