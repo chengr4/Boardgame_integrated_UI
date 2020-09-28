@@ -32,9 +32,9 @@ export function Card({currentVideo}) {
         {/* here may have a profile */}
         <View style={styles.videoDetail}>
           <Text style={styles.videoTitle}>{currentVideo.snippet.title}</Text>
-          {/*Text style={styles.videoState}>
-            {currentVideo.snippet.channelTitle + " " + currentVideo.statistics.viewCount}
-          </Text>*/}
+          <Text style={styles.videoState}>
+            {currentVideo.snippet.channelTitle}
+          </Text>
         </View>
       </View>
     </View>

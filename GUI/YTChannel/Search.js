@@ -2,6 +2,9 @@ import React, {useState} from 'react';
 import { Text, View, TextInput,StyleSheet } from 'react-native';
 
 
+/*
+ NOT USED
+ */
 
 export function Search() {
   const [value, setValue] = useState();

@@ -126,7 +126,7 @@ function ListScreen() {
   const [refreshing, setRefreshing] = useState(false);
   const getData = () => {
     setRefreshing(true);
-    fetch('http://127.0.0.1:5000/e/e')
+    fetch('https://boardgame-server.herokuapp.com/e/e')
       .then((response) => response.json())
       .then((json) =>{
         var data = [];
@@ -141,7 +141,7 @@ function ListScreen() {
       .then(data=>setData(data))
       .catch((error) => console.error(error));
       
-      fetch('http://127.0.0.1:5000/post/new-app')
+      fetch('https://boardgame-server.herokuapp.com/post/new-app')
       .then((response) => response.json())
       .then((json) =>{
          data = json.reverse();

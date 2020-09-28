@@ -5,7 +5,7 @@ export const Profile = () => {
   const [title, onChangeTitle] = React.useState('Title');
   const [content, onChangeContent] = React.useState('Content');
   const onPress = () => {
-    fetch('http://localhost:5000/post/new-app', {
+    fetch('https://boardgame-server.herokuapp.com/post/new-app', {
       method: 'POST',
       headers: {
       Accept: 'application/json',
@@ -44,16 +44,14 @@ export const Profile = () => {
           marginBottom: 10
         }}
         onChangeText={text => onChangeContent(text)}
-        
         value={content}
-        
        />
       <TouchableOpacity
         style={{backgroundColor: 'pink',
                 borderRadius: 30,
                 padding: 30,}}
         onPress={onPress}
-        >
+      >
         <Text>Post</Text>
         </TouchableOpacity>
     </View>
