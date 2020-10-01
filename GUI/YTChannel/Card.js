@@ -1,6 +1,10 @@
 import React, {useCallback} from 'react';
 import { Text, View, StyleSheet, Image, TouchableOpacity, Linking } from 'react-native';
 
+/**
+ * Every single video
+ * @param {*} currentVideo 
+ */
 export function Card({currentVideo}) {
 
   const supportedURL = 'https://www.youtube.com/watch?v=' + currentVideo.id.videoId;

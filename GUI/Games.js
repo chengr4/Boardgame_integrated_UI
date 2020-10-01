@@ -3,6 +3,9 @@ import { Text, View, StyleSheet } from 'react-native';
 
 // https://medium.com/swlh/react-native-youtube-ui-1a6f4799ac27 
 //(use this link to make UI)
+/**
+ * for the future
+ */
 export function Games() {
   return (
     <View>

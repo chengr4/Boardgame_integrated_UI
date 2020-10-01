@@ -5,7 +5,7 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 
 
 /**
- * Youtube channel
+ * Youtube GUI
  */
 export function YTChannel() {
   const [DATA, setData] = useState([]);

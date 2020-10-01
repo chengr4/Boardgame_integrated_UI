@@ -1,6 +1,9 @@
 import React from 'react';
 import { FlatList, StyleSheet, Text, View, TouchableOpacity, TextInput } from 'react-native';
 
+/**
+ * Profile GUI  (for posting articles)
+ */
 export const Profile = () => {
   const [title, onChangeTitle] = React.useState('Title');
   const [content, onChangeContent] = React.useState('Content');
