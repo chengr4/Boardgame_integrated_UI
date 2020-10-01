@@ -27,8 +27,9 @@ import { useNavigation } from '@react-navigation/native';
 // must be declared at firt
 const Stack = createStackNavigator();
 
-
-// jsut the header (purple part)
+/**
+ * Just the header (purple part)
+ */
 const Header = () => {
   return(
     <View style={styles.header}>

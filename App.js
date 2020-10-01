@@ -13,6 +13,9 @@ import {Games} from './GUI/Games';
 
 const Tab = createBottomTabNavigator();
 
+/**
+ * main
+ */
 export default function App() {
   return (
     <NavigationContainer>
